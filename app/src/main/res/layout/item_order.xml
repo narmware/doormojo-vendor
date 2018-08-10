@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Order ID:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/title_card"/>
+
+            <TextView
+                android:text="Customer Name:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/title_card"/>
+
+            <TextView
+                android:text="Order category:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/title_card"/>
+            <TextView
+                android:text="Date and time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/title_card"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/order_id"
+                android:text="1342"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/desc_card"/>
+
+            <TextView
+                android:id="@+id/order_name"
+                android:text="Rohit Savant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/desc_card"/>
+
+            <TextView
+                android:id="@+id/order_category"
+                android:text="Cleaning / Window Cleaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/desc_card"/>
+
+            <TextView
+                android:id="@+id/order_date_time"
+                android:text="24-1-2018 / 6.00PM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/desc_card"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:gravity="right">
+                <Button
+                    android:id="@+id/order_bt_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Call"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_phone_in_talk"
+                    android:fontFamily="sans-serif-condensed"
+                    />
+
+                <Button
+                    android:id="@+id/order_bt_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Order Details"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="sans-serif-condensed"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

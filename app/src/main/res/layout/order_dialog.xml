@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="200dp"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Details"
+            android:layout_gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginBottom="20dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:text="Order ID:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/title_card"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:text="23422"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/desc_card"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:text="Customer Name:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/title_card"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:text="Rohit S"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/desc_card"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:text="Order Category:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/title_card"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:text="Cleaning / Door cleaning"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/desc_card"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:text="Order Date:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/title_card"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:text="23/4/2018"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/desc_card"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:text="Order Address:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/title_card"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/sample"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/desc_card"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:text="Order Description:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/title_card"/>
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/sample"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/desc_card"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

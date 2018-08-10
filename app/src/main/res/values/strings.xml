@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">DoorMojo Vendor</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="tab_text_1">Current Orders</string>
+    <string name="tab_text_2">Closed Orders</string>
+    <string name="tab_text_3">USER Profile</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample">The Dawn of Love is an oil painting by English artist William Etty, first exhibited in 1828. Loosely based on a passage from John Milton\'s 1634 Comus.</string>
+    <string name="title_activity_login">LoginActivity</string>
+</resources>
