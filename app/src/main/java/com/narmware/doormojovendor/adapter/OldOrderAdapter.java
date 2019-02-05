@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.narmware.doormojovendor.MyApplication;
 import com.narmware.doormojovendor.R;
+import com.narmware.doormojovendor.fragment.CurrentOrderFragment;
+import com.narmware.doormojovendor.fragment.PreviousOrderFragment;
 import com.narmware.doormojovendor.pojo.Order;
 
 import java.util.ArrayList;
@@ -30,9 +32,24 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
         this.mData = mData;
     }
 
-    private void showDetaisDialog() {
+    private void showDetaisDialog(String order_id,String cust_name,String service,String date,String address,String desc) {
         Dialog d = new Dialog(mContext);
         d.setContentView(R.layout.order_dialog);
+
+        TextView mTxtOrderId=d.findViewById(R.id.txt_order_id);
+        TextView mTxtName=d.findViewById(R.id.txt_cust_name);
+        TextView mTxtOrderCat=d.findViewById(R.id.txt_order_cat);
+        TextView mTxtOrderDate=d.findViewById(R.id.txt_order_date);
+        TextView mTxtOrderAddr=d.findViewById(R.id.txt_order_addr);
+        TextView mTxtOrderDesc=d.findViewById(R.id.txt_order_desc);
+
+        mTxtOrderId.setText(order_id);
+        mTxtName.setText(cust_name);
+        mTxtOrderCat.setText(service);
+        mTxtOrderDate.setText(date);
+        mTxtOrderAddr.setText(address);
+        mTxtOrderDesc.setText(desc);
+
         d.setTitle("Order Details");
         d.show();
     }
@@ -47,14 +64,23 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
     @Override
     public void onBindViewHolder(@NonNull OrderItem holder, int position) {
         Order singleItem = mData.get(position);
-        holder.id.setText(singleItem.getId());
+        holder.mItem=singleItem;
+
+        holder.id.setText(singleItem.getOrder_id());
         holder.name.setText(singleItem.getName());
-        holder.category.setText(singleItem.getCategory());
-        holder.datestamp.setText(singleItem.getTimestamp());
+        holder.category.setText(singleItem.getService());
+        holder.datestamp.setText(singleItem.getOrder_date());
     }
 
     @Override
     public int getItemCount() {
+        if(mData.size()==0)
+        {
+            PreviousOrderFragment.mEmptyLay.setVisibility(View.VISIBLE);
+        }
+        else{
+            PreviousOrderFragment.mEmptyLay.setVisibility(View.INVISIBLE);
+        }
         return mData.size();
     }
 
@@ -62,6 +88,7 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
         TextView id, name, category, datestamp;
         ImageView image;
         Button details;
+        Order mItem;
 
         public OrderItem(View itemView) {
             super(itemView);
@@ -75,7 +102,7 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
                 @Override
                 public void onClick(View v) {
                     MyApplication.mt(id.getText().toString(), mContext);
-                    showDetaisDialog();
+                    showDetaisDialog(mItem.getOrder_id(),mItem.getName(),mItem.getService(),mItem.getOrder_date(),mItem.getAddress(),mItem.getDescription());
                 }
             });
 

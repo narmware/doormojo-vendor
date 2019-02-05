@@ -6,32 +6,70 @@ package com.narmware.doormojovendor.pojo;
 
 public class Order {
 
-    public Order(String id, String name, String category, String timestamp) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.timestamp = timestamp;
+    public String order_id, name, service, address, order_date,mobile,description,vm_id;
+
+    public String getOrder_id() {
+        return order_id;
     }
 
-    public String id, name, category, timestamp, image;
-
-    public String getId() {
-        return id;
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getCategory() {
-        return category;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getService() {
+        return service;
     }
 
-    public String getImage() {
-        return image;
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(String order_date) {
+        this.order_date = order_date;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getVm_id() {
+        return vm_id;
+    }
+
+    public void setVm_id(String vm_id) {
+        this.vm_id = vm_id;
     }
 }
+

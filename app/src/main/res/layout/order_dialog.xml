@@ -51,6 +51,7 @@
                             style="@style/title_card"/>
 
                         <TextView
+                            android:id="@+id/txt_order_id"
                             android:layout_marginLeft="10dp"
                             android:text="23422"
                             android:layout_width="wrap_content"
@@ -70,6 +71,7 @@
                             style="@style/title_card"/>
 
                         <TextView
+                            android:id="@+id/txt_cust_name"
                             android:layout_marginLeft="10dp"
                             android:text="Rohit S"
                             android:layout_width="wrap_content"
@@ -88,6 +90,7 @@
                             style="@style/title_card"/>
 
                         <TextView
+                            android:id="@+id/txt_order_cat"
                             android:layout_marginLeft="10dp"
                             android:text="Cleaning / Door cleaning"
                             android:layout_width="wrap_content"
@@ -106,6 +109,7 @@
                             style="@style/title_card"/>
 
                         <TextView
+                            android:id="@+id/txt_order_date"
                             android:layout_marginLeft="10dp"
                             android:text="23/4/2018"
                             android:layout_width="wrap_content"
@@ -124,6 +128,7 @@
                             style="@style/title_card"/>
 
                         <TextView
+                            android:id="@+id/txt_order_addr"
                             android:layout_marginLeft="10dp"
                             android:text="@string/sample"
                             android:layout_width="wrap_content"
@@ -142,6 +147,7 @@
                             style="@style/title_card"/>
 
                         <TextView
+                            android:id="@+id/txt_order_desc"
                             android:layout_marginLeft="10dp"
                             android:text="@string/sample"
                             android:layout_width="wrap_content"

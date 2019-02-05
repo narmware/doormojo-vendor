@@ -39,4 +39,9 @@ public class Constants {
     public static final String CALL_FROM_ACCOUNT="myAccount";
     public static final String CALL_FROM_LOGIN="Login";
 
+
+    public static final int LOGIN_SUCCESS = 100;
+    public static final int LOGIN_ACCOUNT_NOT_VERIFIED = 200;
+    public static final int LOGIN_INVALID_CREDENTIALS = 300;
+
 }
