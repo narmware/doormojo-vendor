@@ -1,5 +1,7 @@
 package com.narmware.doormojovendor.fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,16 +9,34 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.narmware.doormojovendor.MyApplication;
 import com.narmware.doormojovendor.R;
 import com.narmware.doormojovendor.adapter.OldOrderAdapter;
 import com.narmware.doormojovendor.adapter.OrderAdapter;
+import com.narmware.doormojovendor.helper.Endpoints;
+import com.narmware.doormojovendor.helper.SharedPreferencesHelper;
+import com.narmware.doormojovendor.helper.SupportFunctions;
 import com.narmware.doormojovendor.pojo.Order;
+import com.narmware.doormojovendor.pojo.OrderResponse;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,25 +62,22 @@ public class PreviousOrderFragment extends Fragment {
     private OldOrderAdapter mAdapter;
     private RecyclerView mRecycler;
     private ArrayList<Order> mData = new ArrayList<>();
-
-
-    private void setData(int cnt) {
-        for(int i= 0; i<cnt; i++) {
-            Order o = new Order("10000", "Rohit Savant", "Cleaning Services", "24-4-2018");
-            mData.add(o);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
+    Dialog mNoConnectionDialog;
+    RequestQueue mVolleyRequest;
+    public static LinearLayout mEmptyLay;
 
     private void init() {
+        mVolleyRequest = Volley.newRequestQueue(getContext());
+
+        mEmptyLay=mView.findViewById(R.id.lin_empty_order);
         mAdapter = new OldOrderAdapter(getActivity(), mData);
         mRecycler = mView.findViewById(R.id.recycler_order_old);
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        setData(10);
 
+        getOldOrders();
     }
 
     public PreviousOrderFragment() {
@@ -140,5 +157,81 @@ public class PreviousOrderFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void getOldOrders() {
+        HashMap<String,String> param = new HashMap();
+        param.put(Endpoints.VENDOR_ID, SharedPreferencesHelper.getUserId(getContext()));
+
+        String url= SupportFunctions.appendParam(Endpoints.GET_OLD_ORDERS,param);
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setTitle("Validating credentals");
+        dialog.setTitle("Connecting ...");
+        if(!dialog.isShowing()) dialog.show();
+
+        //Log.e("Login url",url);
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+
+                            Gson gson = new Gson();
+                            Log.e("LiveOrder Json_string",response.toString());
+                            OrderResponse orderResponse=gson.fromJson(response.toString(),OrderResponse.class);
+                            Order[] orders=orderResponse.getData();
+
+                            for(Order item:orders)
+                            {
+                                mData.add(item);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                            if(dialog.isShowing()) dialog.dismiss();
+                            if(mNoConnectionDialog.isShowing()) mNoConnectionDialog.dismiss();
+
+                        } catch (Exception e) {
+
+                            e.printStackTrace();
+                            if(dialog.isShowing()) dialog.dismiss();
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        //Log.e("Volley", error.getMessage());
+                        MyApplication.mt("Server not reachable", getContext());
+                        showNoConnectionDialog();
+                        if(dialog.isShowing()) dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+    private void showNoConnectionDialog() {
+        mNoConnectionDialog = new Dialog(getContext(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        mNoConnectionDialog.setContentView(R.layout.dialog_no_internet);
+        mNoConnectionDialog.setCancelable(false);
+        mNoConnectionDialog.show();
+
+        Button tryAgain = mNoConnectionDialog.findViewById(R.id.txt_retry);
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getOldOrders();
+            }
+        });
     }
 }

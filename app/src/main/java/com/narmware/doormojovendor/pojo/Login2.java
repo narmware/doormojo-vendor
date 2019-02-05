@@ -5,7 +5,7 @@ package com.narmware.doormojovendor.pojo;
  */
 
 public class Login2 {
-    public String response,msg, name, email, vendor_id, m1, m2, m3, m4;
+    public String response, msg, name, email, vendor_id, m1, m2, m3, m4;
 
     public String getResponse() {
         return response;
