@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.narmware.doormojovendor.R;
 import com.narmware.doormojovendor.helper.Endpoints;
+import com.narmware.doormojovendor.helper.SharedPreferencesHelper;
 import com.narmware.doormojovendor.helper.SupportFunctions;
 
 import org.json.JSONObject;
@@ -50,8 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         Gson gson=new Gson();
         HashMap<String,String> param = new HashMap();
-        param.put(Endpoints.LOGIN_USERNAME, "dhiraj@gmail.com");
-        param.put(Endpoints.LOGIN_PASSWORD, "2T4KVD");
 
 
         //url with params
@@ -75,8 +75,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             Log.e("Login Json_string",response.toString());
                             Gson gson = new Gson();
-
-
                         } catch (Exception e) {
 
                             e.printStackTrace();
