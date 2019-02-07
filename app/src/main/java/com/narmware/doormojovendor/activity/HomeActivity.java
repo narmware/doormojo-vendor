@@ -1,6 +1,8 @@
 package com.narmware.doormojovendor.activity;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,17 +16,20 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.narmware.doormojovendor.R;
+import com.narmware.doormojovendor.fragment.AllOrderFragment;
 import com.narmware.doormojovendor.fragment.CurrentOrderFragment;
 import com.narmware.doormojovendor.fragment.PreviousOrderFragment;
 
-public class HomeActivity extends AppCompatActivity implements CurrentOrderFragment.OnFragmentInteractionListener, PreviousOrderFragment.OnFragmentInteractionListener{
+public class HomeActivity extends AppCompatActivity implements AllOrderFragment.OnFragmentInteractionListener,CurrentOrderFragment.OnFragmentInteractionListener, PreviousOrderFragment.OnFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements CurrentOrderFragm
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +129,10 @@ public class HomeActivity extends AppCompatActivity implements CurrentOrderFragm
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return CurrentOrderFragment.newInstance("", "");
+                    return AllOrderFragment.newInstance("", "");
                 case 1:
+                    return CurrentOrderFragment.newInstance("", "");
+                case 2:
                     return PreviousOrderFragment.newInstance("", "");
             }
             return PlaceholderFragment.newInstance(position + 1);
@@ -133,7 +141,44 @@ public class HomeActivity extends AppCompatActivity implements CurrentOrderFragm
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId()==R.id.action_profile)
+        {
+            Intent intent=new Intent(HomeActivity.this,ProfileActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit app", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,6 +41,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by rohitsavant on 08/08/18.
@@ -129,8 +132,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
         mBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                sendCompleteOrder(order_id,vm_id,status,mEdtRemark.getText().toString().trim());
+                //sendCompleteOrder(order_id,vm_id,status,mEdtRemark.getText().toString().trim());
                 d.dismiss();
             }
         });
@@ -155,6 +157,22 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
         holder.name.setText(singleItem.getName());
         holder.category.setText(singleItem.getService());
         holder.datestamp.setText(singleItem.getOrder_date());
+
+        if(singleItem.booking_status.equals(Constants.STATUS_START))
+        {
+            holder.mBtnCompleteOrder.setVisibility(View.GONE);
+            holder.mBtnStopOrder.setVisibility(View.VISIBLE);
+        }
+        if(singleItem.booking_status.equals(Constants.STATUS_STOP))
+        {
+            holder.mBtnCompleteOrder.setVisibility(View.GONE);
+            holder.mBtnStopOrder.setVisibility(View.GONE);
+        }
+        if(singleItem.booking_status.equals(Constants.STATUS_NEW))
+        {
+            holder.mBtnCompleteOrder.setVisibility(View.VISIBLE);
+            holder.mBtnStopOrder.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -172,7 +190,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
     class OrderItem extends RecyclerView.ViewHolder {
         TextView id, name, category, datestamp;
         ImageView image;
-        Button details,mBtnCompleteOrder;
+        Button details,mBtnCompleteOrder,mBtnStopOrder;
         ImageButton mBtnCall;
         Order mItem;
 
@@ -185,11 +203,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
             details = itemView.findViewById(R.id.order_bt_more);
             mBtnCall = itemView.findViewById(R.id.order_bt_call);
             mBtnCompleteOrder = itemView.findViewById(R.id.btn_complete_order);
+            mBtnStopOrder = itemView.findViewById(R.id.btn_stop_order);
 
             details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MyApplication.mt(id.getText().toString(), mContext);
+                   // MyApplication.mt(mItem.getOrder_id(), mContext);
                     showDetaisDialog(mItem.getOrder_id(),mItem.getName(),mItem.getService(),mItem.getOrder_date(),mItem.getAddress(),mItem.getDescription());
                 }
             });
@@ -206,7 +225,35 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
             mBtnCompleteOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showRemarkDialog(mItem.getOrder_id(),mItem.getVm_id(),"Close");
+                    sendCompleteOrder(mItem.getOrder_id(),Constants.STATUS_START);
+                    //showRemarkDialog(mItem.getOrder_id(),mItem.getVm_id(),"Close");
+                }
+            });
+
+            mBtnStopOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Are you sure")
+                            .setContentText("You want to close this order")
+                            .setConfirmText("Yes")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sendCompleteOrder(mItem.getOrder_id(),Constants.STATUS_STOP);
+                                }
+                            })
+                            .showCancelButton(true)
+                            .setCancelText("Cancel")
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                }
+                            })
+                            .show();
+                    //showRemarkDialog(mItem.getOrder_id(),mItem.getVm_id(),"Close");
                 }
             });
 
@@ -214,17 +261,25 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
     }
 
 
-    private void sendCompleteOrder(String order_id,String vm_id,String status,String comment) {
-        HashMap<String,String> param = new HashMap();
-        param.put(Endpoints.ORDER_ID, order_id);
-        param.put(Endpoints.VM_ID, vm_id);
-        param.put(Endpoints.STATUS,status);
-        param.put(Endpoints.COMMENT,comment);
+    private void sendCompleteOrder(String order_id, final String status) {
+        final HashMap<String,String> param = new HashMap();
+        param.put("book_id", order_id);
+        param.put(Endpoints.VENDOR_ID, SharedPreferencesHelper.getUserId(mContext));
+        String url=null;
 
-        String url= SupportFunctions.appendParam(Endpoints.SEND_COMPLETE_ORDER,param);
+        if(status.equals(Constants.STATUS_START))
+        {
+             url= SupportFunctions.appendParam(Endpoints.START_ORDER,param);
+        }
+        if(status.equals(Constants.STATUS_STOP))
+        {
+             url= SupportFunctions.appendParam(Endpoints.STOP_ORDER,param);
+        }
+        Log.e("Order Json_string",url);
+
         final ProgressDialog dialog = new ProgressDialog(mContext);
         dialog.setCancelable(false);
-        dialog.setTitle("Validating credentals");
+        dialog.setTitle("Updating status");
         dialog.setTitle("Connecting ...");
         if(!dialog.isShowing()) dialog.show();
 
@@ -243,8 +298,32 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
 
                             Gson gson = new Gson();
                             Login2 data = gson.fromJson(response.toString(), Login2.class);
-                            Log.e("Login Json_string",response.toString());
+                            Log.e("Order Json_string",response.toString());
 
+                            if(data.response.equals("100"))
+                            {
+
+                                if(status.equals(Constants.STATUS_START))
+                                {
+                                    Toast.makeText(mContext, "Service started", Toast.LENGTH_SHORT).show();
+                                }
+                                if(status.equals(Constants.STATUS_STOP))
+                                {
+                                    Toast.makeText(mContext, "Service stopped", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+
+                                if(status.equals(Constants.STATUS_START))
+                                {
+                                    Toast.makeText(mContext, "Service already started", Toast.LENGTH_SHORT).show();
+                                }
+                                if(status.equals(Constants.STATUS_STOP))
+                                {
+                                    Toast.makeText(mContext, "Service already stopped", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
                             //MyApplication.mt(data.getMsg(), LoginActivity.this);
                             if(dialog.isShowing()) dialog.dismiss();
 

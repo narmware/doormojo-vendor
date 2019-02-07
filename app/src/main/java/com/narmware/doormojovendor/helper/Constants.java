@@ -17,28 +17,9 @@ public class Constants {
     public static final String NAME="name";
     public static final String MOBILE_NUMBER="mobile";
 
-    public static final String EMAIL="email";
-    public static final String PASSWORD="password";
-    public static final String USER_ID="user_id";
-
-    public static final String FLAT_DISC="Flat";
-    public static final String PERCENT_DISC="Percentage";
-
-    public static final String CAT_ID="cat_id";
-    public static final String VAN_ID="van_id";
-
-    public static final String CART_ID="cart_id";
-    public static final String TOTAL="total";
-    public static final String GRAND_TOTAL="grand_total";
-    public static final String DISCOUNT="disc";
-
-    public static final String COUPON_CODE="coupon_code";
-
-    public static final String CALL_FROM_HOME="callFromHome";
-    public static final String CALL_FROM_CART="callFromCart";
-    public static final String CALL_FROM_ACCOUNT="myAccount";
-    public static final String CALL_FROM_LOGIN="Login";
-
+    public static final String STATUS_START="START";
+    public static final String STATUS_STOP="STOP";
+    public static final String STATUS_NEW="NEW";
 
     public static final int LOGIN_SUCCESS = 100;
     public static final int LOGIN_ACCOUNT_NOT_VERIFIED = 200;

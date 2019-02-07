@@ -88,11 +88,16 @@
                 android:gravity="right">
                 <Button
                     android:id="@+id/order_bt_more"
+                    android:foreground="?attr/selectableItemBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="View Order Details"
                     android:textAllCaps="false"
+                    android:minHeight="1dp"
+                    android:padding="8dp"
+                    android:background="@drawable/button_view"
                     android:textColor="@color/colorAccent"
+                    android:layout_margin="2dp"
                     android:fontFamily="sans-serif-condensed"
                     />
             </LinearLayout>

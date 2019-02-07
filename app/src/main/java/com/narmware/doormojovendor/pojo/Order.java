@@ -6,7 +6,7 @@ package com.narmware.doormojovendor.pojo;
 
 public class Order {
 
-    public String order_id, name, service, address, order_date,mobile,description,vm_id;
+        public String order_id, name, service, address, order_date,mobile,description,vm_id,booking_status;
 
     public String getOrder_id() {
         return order_id;
@@ -70,6 +70,14 @@ public class Order {
 
     public void setVm_id(String vm_id) {
         this.vm_id = vm_id;
+    }
+
+    public String getBooking_status() {
+        return booking_status;
+    }
+
+    public void setBooking_status(String booking_status) {
+        this.booking_status = booking_status;
     }
 }
 

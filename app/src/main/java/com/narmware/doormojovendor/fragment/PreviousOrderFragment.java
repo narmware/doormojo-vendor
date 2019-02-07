@@ -27,6 +27,7 @@ import com.narmware.doormojovendor.MyApplication;
 import com.narmware.doormojovendor.R;
 import com.narmware.doormojovendor.adapter.OldOrderAdapter;
 import com.narmware.doormojovendor.adapter.OrderAdapter;
+import com.narmware.doormojovendor.helper.Constants;
 import com.narmware.doormojovendor.helper.Endpoints;
 import com.narmware.doormojovendor.helper.SharedPreferencesHelper;
 import com.narmware.doormojovendor.helper.SupportFunctions;
@@ -162,8 +163,11 @@ public class PreviousOrderFragment extends Fragment {
     private void getOldOrders() {
         HashMap<String,String> param = new HashMap();
         param.put(Endpoints.VENDOR_ID, SharedPreferencesHelper.getUserId(getContext()));
+        param.put(Endpoints.STATUS, Constants.STATUS_STOP);
 
-        String url= SupportFunctions.appendParam(Endpoints.GET_OLD_ORDERS,param);
+        String url= SupportFunctions.appendParam(Endpoints.GET_STATUS_WISE_ORDERS,param);
+        Log.e("LiveOrder url",url);
+
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
         dialog.setTitle("Validating credentals");
@@ -187,6 +191,7 @@ public class PreviousOrderFragment extends Fragment {
                             Log.e("LiveOrder Json_string",response.toString());
                             OrderResponse orderResponse=gson.fromJson(response.toString(),OrderResponse.class);
                             Order[] orders=orderResponse.getData();
+                            mData.clear();
 
                             for(Order item:orders)
                             {

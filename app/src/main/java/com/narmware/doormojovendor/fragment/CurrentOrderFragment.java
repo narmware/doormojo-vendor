@@ -172,8 +172,9 @@ public class CurrentOrderFragment extends Fragment {
     private void liveOrders() {
         HashMap<String,String> param = new HashMap();
         param.put(Endpoints.VENDOR_ID, SharedPreferencesHelper.getUserId(getContext()));
+        param.put(Endpoints.STATUS, Constants.STATUS_START);
 
-        String url= SupportFunctions.appendParam(Endpoints.GET_LIVE_ORDERS,param);
+        String url= SupportFunctions.appendParam(Endpoints.GET_STATUS_WISE_ORDERS,param);
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
         dialog.setTitle("Validating credentals");
@@ -197,6 +198,7 @@ public class CurrentOrderFragment extends Fragment {
                             Log.e("LiveOrder Json_string",response.toString());
                             OrderResponse orderResponse=gson.fromJson(response.toString(),OrderResponse.class);
                             Order[] orders=orderResponse.getData();
+                            mData.clear();
 
                             for(Order item:orders)
                             {
