@@ -6,7 +6,15 @@ package com.narmware.doormojovendor.pojo;
 
 public class Order {
 
-        public String order_id, name, service, address, order_date,mobile,description,vm_id,booking_status;
+        public String order_id, name, service, address, order_date,mobile,description,vm_id,booking_status,book_no;
+
+    public String getBook_no() {
+        return book_no;
+    }
+
+    public void setBook_no(String book_no) {
+        this.book_no = book_no;
+    }
 
     public String getOrder_id() {
         return order_id;

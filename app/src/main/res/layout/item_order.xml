@@ -58,6 +58,12 @@
                         android:layout_height="wrap_content"
                         style="@style/title_card"/>
 
+                    <TextView
+                        android:text="Address:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/title_card"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -89,6 +95,12 @@
                     <TextView
                         android:id="@+id/order_date_time"
                         android:text="24-1-2018 / 6.00PM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/desc_card"/>
+
+                    <TextView
+                        android:id="@+id/order_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/desc_card"/>

@@ -153,10 +153,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
         Order singleItem = mData.get(position);
         holder.mItem=singleItem;
 
-        holder.id.setText(singleItem.getOrder_id());
+        holder.id.setText(singleItem.getBook_no());
         holder.name.setText(singleItem.getName());
         holder.category.setText(singleItem.getService());
         holder.datestamp.setText(singleItem.getOrder_date());
+        holder.mTxtAddress.setText(singleItem.getAddress());
 
         if(singleItem.booking_status.equals(Constants.STATUS_START))
         {
@@ -188,7 +189,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
     }
 
     class OrderItem extends RecyclerView.ViewHolder {
-        TextView id, name, category, datestamp;
+        TextView id, name, category, datestamp,mTxtAddress;
         ImageView image;
         Button details,mBtnCompleteOrder,mBtnStopOrder;
         ImageButton mBtnCall;
@@ -204,6 +205,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItem> {
             mBtnCall = itemView.findViewById(R.id.order_bt_call);
             mBtnCompleteOrder = itemView.findViewById(R.id.btn_complete_order);
             mBtnStopOrder = itemView.findViewById(R.id.btn_stop_order);
+            mTxtAddress = itemView.findViewById(R.id.order_address);
 
             details.setOnClickListener(new View.OnClickListener() {
                 @Override

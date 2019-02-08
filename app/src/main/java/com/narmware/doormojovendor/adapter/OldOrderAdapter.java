@@ -66,10 +66,11 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
         Order singleItem = mData.get(position);
         holder.mItem=singleItem;
 
-        holder.id.setText(singleItem.getOrder_id());
+        holder.id.setText(singleItem.getBook_no());
         holder.name.setText(singleItem.getName());
         holder.category.setText(singleItem.getService());
         holder.datestamp.setText(singleItem.getOrder_date());
+        holder.mTxtAddress.setText(singleItem.getAddress());
     }
 
     @Override
@@ -85,10 +86,11 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
     }
 
     class OrderItem extends RecyclerView.ViewHolder {
-        TextView id, name, category, datestamp;
+        TextView id, name, category, datestamp,mTxtAddress;
         ImageView image;
         Button details;
         Order mItem;
+
 
         public OrderItem(View itemView) {
             super(itemView);
@@ -97,6 +99,7 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.OrderI
             category = itemView.findViewById(R.id.order_category);
             datestamp = itemView.findViewById(R.id.order_date_time);
             details = itemView.findViewById(R.id.order_bt_more);
+            mTxtAddress = itemView.findViewById(R.id.order_address);
 
             details.setOnClickListener(new View.OnClickListener() {
                 @Override
